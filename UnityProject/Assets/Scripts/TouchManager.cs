@@ -46,7 +46,6 @@ public class TouchManager : SingletonComponent<TouchManager>
         if ( Input.GetMouseButtonDown( 0 ) )
         {
             Vector2 touchWorldPosition = m_camera.ScreenToWorldPoint( Input.mousePosition );
-            Debug.Log( touchWorldPosition );
             Collider2D collider = Physics2D.OverlapPoint( touchWorldPosition );
             if ( collider != null )
             {
