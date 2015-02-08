@@ -28,10 +28,18 @@ public class RampComponent : InteractiveObstacleComponent
         m_initialLocalTouchPoint = this.transform.InverseTransformPoint( m_initialTouchPoint );
 
         m_touchObject = new GameObject();
+        m_touchObject.name = "Touch";
+        m_touchObject.layer = 9;
+        Rigidbody2D touchBody = m_touchObject.AddComponent<Rigidbody2D>();
+        touchBody.mass = 0;
+        touchBody.isKinematic = true;
         SpringJoint2D spring = m_touchObject.AddComponent<SpringJoint2D>();
+        spring.connectedBody = m_body;
         spring.anchor = Vector2.zero;
         spring.connectedAnchor = m_initialLocalTouchPoint;
-        spring.dampingRatio = 1;
+        spring.dampingRatio = 0;
+        spring.frequency = 0f;
+        spring.distance = 0;
     }
 
     public override void HandleClickBecauseFuckingUnity()
@@ -41,11 +49,18 @@ public class RampComponent : InteractiveObstacleComponent
         m_initialLocalTouchPoint = this.transform.InverseTransformPoint( m_initialTouchPoint );
 
         m_touchObject = new GameObject();
+        m_touchObject.name = "Touch";
+        m_touchObject.layer = 9;
+        Rigidbody2D touchBody = m_touchObject.AddComponent<Rigidbody2D>();
+        touchBody.mass = 0;
+        touchBody.isKinematic = true;
         SpringJoint2D spring = m_touchObject.AddComponent<SpringJoint2D>();
         spring.connectedBody = m_body;
         spring.anchor = Vector2.zero;
         spring.connectedAnchor = m_initialLocalTouchPoint;
-        spring.dampingRatio = 1;
+        spring.dampingRatio = 0;
+        spring.frequency = 0f;
+        spring.distance = 0;
     }
 
     public void Update()
@@ -53,7 +68,7 @@ public class RampComponent : InteractiveObstacleComponent
 #if UNITY_EDITOR
         if ( m_isClicked )
         {
-            if ( Input.GetMouseButtonDown(1))
+            if ( Input.GetMouseButtonDown( 1 ) )
             {
                 Debug.Break();
             }
@@ -104,6 +119,10 @@ public class RampComponent : InteractiveObstacleComponent
 
             //Gizmos.color = Color.red;
             //Gizmos.DrawLine( m_initialTouchPoint, worldPosition );
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine( m_touchObject.transform.position - new Vector3( -0.5f, -0.5f ), m_touchObject.transform.position - new Vector3( 0.5f, 0.5f ) );
+            Gizmos.DrawLine( m_touchObject.transform.position - new Vector3( -0.5f, 0.5f ), m_touchObject.transform.position - new Vector3( 0.5f, -0.5f ) );
 
         }
     }
