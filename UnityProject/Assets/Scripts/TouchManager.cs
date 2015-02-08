@@ -42,7 +42,7 @@ public class TouchManager : SingletonComponent<TouchManager>
                 }
             }
         }
-
+#if UNITY_EDITOR
         if ( Input.GetMouseButtonDown( 0 ) )
         {
             Vector2 touchWorldPosition = m_camera.ScreenToWorldPoint( Input.mousePosition );
@@ -59,5 +59,6 @@ public class TouchManager : SingletonComponent<TouchManager>
             }
         }
     }
+#endif
 
 }

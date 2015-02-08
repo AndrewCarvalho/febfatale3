@@ -4,8 +4,6 @@ using System.Collections;
 [RequireComponent( typeof( Rigidbody2D ) )]
 public class RampComponent : InteractiveObstacleComponent
 {
-    public float m_forceScale = 1;
-
     private GameObject m_touchObject;
     private Touch m_touch;
     private Camera m_camera;
@@ -13,7 +11,7 @@ public class RampComponent : InteractiveObstacleComponent
     private Vector2 m_initialLocalTouchPoint;
     private Rigidbody2D m_body;
 
-    private bool m_isClicked = false;
+    private bool m_isClicked = false, m_isTouched = false;
 
     public void Start()
     {
@@ -23,6 +21,7 @@ public class RampComponent : InteractiveObstacleComponent
 
     public override void HandleTouch( Touch touch )
     {
+        m_isTouched = true;
         m_touch = touch;
         m_initialTouchPoint = m_camera.ScreenToWorldPoint( m_touch.position );
         m_initialLocalTouchPoint = this.transform.InverseTransformPoint( m_initialTouchPoint );
@@ -37,7 +36,7 @@ public class RampComponent : InteractiveObstacleComponent
         spring.connectedBody = m_body;
         spring.anchor = Vector2.zero;
         spring.connectedAnchor = m_initialLocalTouchPoint;
-        spring.dampingRatio = 0;
+        spring.dampingRatio = 0f;
         spring.frequency = 0f;
         spring.distance = 0;
     }
@@ -58,14 +57,14 @@ public class RampComponent : InteractiveObstacleComponent
         spring.connectedBody = m_body;
         spring.anchor = Vector2.zero;
         spring.connectedAnchor = m_initialLocalTouchPoint;
-        spring.dampingRatio = 0;
+        spring.dampingRatio = 0f;
         spring.frequency = 0f;
         spring.distance = 0;
     }
 
     public void Update()
     {
-#if UNITY_EDITOR
+
         if ( m_isClicked )
         {
             if ( Input.GetMouseButtonDown( 1 ) )
@@ -83,22 +82,21 @@ public class RampComponent : InteractiveObstacleComponent
                 m_touchObject.transform.position = worldPosition;
             }
         }
-#else
-        if ( !( m_touch.phase == TouchPhase.Ended || m_touch.phase == TouchPhase.Canceled ) )
-        {
-            Vector2 worldPosition = m_camera.ScreenToWorldPoint( m_touch.position );
-            //Vector2 localPosition = this.transform.InverseTransformDirection( worldPosition );
-            //Vector2 forcePosition = this.transform.TransformPoint( m_initialLocalTouchPoint );
-            //Vector2 distance = worldPosition - forcePosition;
 
-            //m_body.AddForceAtPosition( distance * m_forceScale, forcePosition );
-            m_touchObject.transform.position = worldPosition;
-        }
-        else
+
+        if ( m_isTouched )
         {
-            Destroy( m_touchObject );
+            if ( m_touch.phase == TouchPhase.Ended || m_touch.phase == TouchPhase.Canceled )
+            {
+                Destroy( m_touchObject );
+                m_isTouched = false;
+            }
+            else
+            {
+                Vector2 worldPosition = m_camera.ScreenToWorldPoint( m_touch.position );
+                m_touchObject.transform.position = worldPosition;
+            }
         }
-#endif
 
     }
 
