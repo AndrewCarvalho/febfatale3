@@ -124,4 +124,9 @@ public class RampComponent : InteractiveObstacleComponent
 
         }
     }
+
+    public override float GetWidth()
+    {
+        return GetComponentInChildren<RectTransform>().rect.width * m_canvas.scaleFactor;
+    }
 }
