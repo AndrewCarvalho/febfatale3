@@ -20,29 +20,29 @@ public class TouchManager : SingletonComponent<TouchManager>
         // check hits
         // touches get handles by interactive objects
 
-        Touch[] touches = Input.touches;
+        //Touch[] touches = Input.touches;
 
-        for ( int touchIndex = 0; touchIndex < Input.touchCount; touchIndex++ )
-        {
-            if ( touches[touchIndex].phase == TouchPhase.Began )
-            {
-                Touch touch = touches[ touchIndex ];
-                Vector2 touchWorldPosition = m_camera.ScreenToWorldPoint( touch.position );
+        //for ( int touchIndex = 0; touchIndex < Input.touchCount; touchIndex++ )
+        //{
+        //    if ( touches[touchIndex].phase == TouchPhase.Began )
+        //    {
+        //        Touch touch = touches[ touchIndex ];
+        //        Vector2 touchWorldPosition = m_camera.ScreenToWorldPoint( touch.position );
 
-                Collider2D collider = Physics2D.OverlapPoint( touchWorldPosition );
-                if ( collider != null )
-                {
-                    // do stuffs...
-                    InteractiveObstacleComponent obstacleComponent = collider.GetComponent<InteractiveObstacleComponent>();
+        //        Collider2D collider = Physics2D.OverlapPoint( touchWorldPosition );
+        //        if ( collider != null )
+        //        {
+        //            // do stuffs...
+        //            InteractiveObstacleComponent obstacleComponent = collider.GetComponent<InteractiveObstacleComponent>();
 
-                    if ( obstacleComponent != null )
-                    {
-                        obstacleComponent.HandleTouch( touch );
-                    }
-                }
-            }
-        }
-#if UNITY_EDITOR
+        //            if ( obstacleComponent != null )
+        //            {
+        //                obstacleComponent.HandleTouch( touch );
+        //            }
+        //        }
+        //    }
+        //}
+
         if ( Input.GetMouseButtonDown( 0 ) )
         {
             Vector2 touchWorldPosition = m_camera.ScreenToWorldPoint( Input.mousePosition );
@@ -59,6 +59,6 @@ public class TouchManager : SingletonComponent<TouchManager>
             }
         }
     }
-#endif
+
 
 }

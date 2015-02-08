@@ -11,6 +11,7 @@ public class BreakableWallComponent : InteractiveObstacleComponent
 
     public void Start()
     {
+        base.Start();
         m_health = m_numHits;
     }
 
@@ -32,5 +33,10 @@ public class BreakableWallComponent : InteractiveObstacleComponent
         {
             Destroy( this.gameObject );
         }
+    }
+
+    public override float GetWidth()
+    {
+        return GetComponentInChildren<RectTransform>().rect.width * m_canvas.scaleFactor;
     }
 }
