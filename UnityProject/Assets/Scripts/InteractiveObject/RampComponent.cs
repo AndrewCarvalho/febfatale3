@@ -11,6 +11,8 @@ public class RampComponent : InteractiveObstacleComponent
     private Vector2 m_initialLocalTouchPoint;
     private Rigidbody2D m_body;
 
+    //private GameObject m_touchedGameObject;
+
     private bool m_isClicked = false, m_isTouched = false;
 
     public void Start()
@@ -29,16 +31,23 @@ public class RampComponent : InteractiveObstacleComponent
         m_touchObject = new GameObject();
         m_touchObject.name = "Touch";
         m_touchObject.layer = 9;
-        Rigidbody2D touchBody = m_touchObject.AddComponent<Rigidbody2D>();
-        touchBody.mass = 0;
-        touchBody.isKinematic = true;
-        SpringJoint2D spring = m_touchObject.AddComponent<SpringJoint2D>();
-        spring.connectedBody = m_body;
-        spring.anchor = Vector2.zero;
-        spring.connectedAnchor = m_initialLocalTouchPoint;
-        spring.dampingRatio = 0f;
-        spring.frequency = 0f;
-        spring.distance = 0;
+
+        //Rigidbody2D touchBody = m_touchObject.AddComponent<Rigidbody2D>();
+        //touchBody.mass = 0;
+        //touchBody.isKinematic = true;
+
+        //SpringJoint2D spring = m_touchObject.AddComponent<SpringJoint2D>();
+        //spring.connectedBody = m_body;
+        //spring.anchor = Vector2.zero;
+        //spring.connectedAnchor = m_initialLocalTouchPoint;
+        //spring.dampingRatio = 0f;
+        //spring.frequency = 0f;
+        //spring.distance = 0;
+
+        DistanceJoint2D distance = m_touchObject.AddComponent<DistanceJoint2D>();
+        distance.distance = 0;
+        distance.connectedBody = m_body;
+        distance.connectedAnchor = m_initialLocalTouchPoint;
     }
 
     public override void HandleClickBecauseFuckingUnity()
@@ -50,16 +59,23 @@ public class RampComponent : InteractiveObstacleComponent
         m_touchObject = new GameObject();
         m_touchObject.name = "Touch";
         m_touchObject.layer = 9;
-        Rigidbody2D touchBody = m_touchObject.AddComponent<Rigidbody2D>();
-        touchBody.mass = 0;
-        touchBody.isKinematic = true;
-        SpringJoint2D spring = m_touchObject.AddComponent<SpringJoint2D>();
-        spring.connectedBody = m_body;
-        spring.anchor = Vector2.zero;
-        spring.connectedAnchor = m_initialLocalTouchPoint;
-        spring.dampingRatio = 0f;
-        spring.frequency = 0f;
-        spring.distance = 0;
+
+        //Rigidbody2D touchBody = m_touchObject.AddComponent<Rigidbody2D>();
+        //touchBody.mass = 0;
+        //touchBody.isKinematic = true;
+
+        //SpringJoint2D spring = m_touchObject.AddComponent<SpringJoint2D>();
+        //spring.connectedBody = m_body;
+        //spring.anchor = Vector2.zero;
+        //spring.connectedAnchor = m_initialLocalTouchPoint;
+        //spring.dampingRatio = 0f;
+        //spring.frequency = 0f;
+        //spring.distance = 0;
+
+        DistanceJoint2D distance = m_touchObject.AddComponent<DistanceJoint2D>();
+        distance.distance = 0;
+        distance.connectedBody = m_body;
+        distance.connectedAnchor = m_initialLocalTouchPoint;
     }
 
     public void Update()
@@ -80,9 +96,9 @@ public class RampComponent : InteractiveObstacleComponent
             {
                 Vector2 worldPosition = m_camera.ScreenToWorldPoint( Input.mousePosition );
                 m_touchObject.transform.position = worldPosition;
+                //this.transform.position = worldPosition - m_initialLocalTouchPoint;
             }
         }
-
 
         if ( m_isTouched )
         {
@@ -95,6 +111,7 @@ public class RampComponent : InteractiveObstacleComponent
             {
                 Vector2 worldPosition = m_camera.ScreenToWorldPoint( m_touch.position );
                 m_touchObject.transform.position = worldPosition;
+                //this.transform.position = worldPosition - m_initialLocalTouchPoint;
             }
         }
 

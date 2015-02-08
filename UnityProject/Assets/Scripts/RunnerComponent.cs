@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent( typeof( CircleCollider2D ) )]
+[RequireComponent( typeof( Collider2D ) )]
 [RequireComponent( typeof( Rigidbody2D ) )]
 public class RunnerComponent : MonoBehaviour
 {
@@ -29,8 +29,8 @@ public class RunnerComponent : MonoBehaviour
         if ( this.transform.position.x != m_targetNormalizedHorizontalScreenPosition * m_screenSize.x - m_screenSize.x / 2 )
         {
             float distanceOut = this.transform.position.x - ( m_targetNormalizedHorizontalScreenPosition * m_screenSize.x - m_screenSize.x / 2 );
-            m_body.AddForce( Vector3.left * distanceOut * m_returnAccel, ForceMode2D.Force );
-            //m_body.velocity = -Vector2.right * distanceOut * m_returnAccel;
+            //m_body.AddForce( Vector3.left * distanceOut * m_returnAccel, ForceMode2D.Force );
+            m_body.velocity = -Vector2.right * distanceOut * m_returnAccel;
         }
 
 
