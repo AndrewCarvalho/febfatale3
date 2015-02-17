@@ -47,6 +47,7 @@ public class TouchManager : SingletonComponent<TouchManager>
         {
             Vector2 touchWorldPosition = m_camera.ScreenToWorldPoint( Input.mousePosition );
             Collider2D collider = Physics2D.OverlapPoint( touchWorldPosition );
+            Collider[] colliders3D = Physics.OverlapSphere( new Vector3( touchWorldPosition.x, touchWorldPosition.y, 0 ), 0.001f );
             if ( collider != null )
             {
                 // do stuffs...
@@ -55,6 +56,25 @@ public class TouchManager : SingletonComponent<TouchManager>
                 if ( obstacleComponent != null )
                 {
                     obstacleComponent.HandleClickBecauseFuckingUnity();
+                }
+            }
+            if (colliders3D.Length > 0)
+            {
+                InteractiveObstacleComponent collider3D = null;
+                int colliderIndex = 0;
+                while ( colliderIndex < colliders3D.Length )
+                {
+                    collider3D = colliders3D[ colliderIndex ].GetComponent<InteractiveObstacleComponent>();
+                    if ( collider3D != null )
+                    {
+                        break;
+                    }
+                    ++colliderIndex;
+                }
+
+                if ( collider3D != null )
+                {
+                    collider3D.HandleClickBecauseFuckingUnity();
                 }
             }
         }
