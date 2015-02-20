@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlatformSpawner : MonoBehaviour
+using Discord;
+
+public class PlatformSpawner : SingletonComponent<PlatformSpawner>
 {
-    public static float CurrentSpeed = 0;
+	public float m_startingSpeed = 0.5f;
+    public float CurrentSpeed = 0;
 
     public float m_speedIncreaseRate = 1;
 
@@ -13,6 +16,8 @@ public class PlatformSpawner : MonoBehaviour
         GameObject chunk = ( GameObject )GameObject.Instantiate( Resources.Load( "Prefabs/3D/PlatformChunks/Chunk 00" ) );
         //chunk.transform.position = Vector3.zero;
         chunk.GetComponent<PlatformChunkDriver>().SetMoveAmount( 32 );
+
+		CurrentSpeed = m_startingSpeed;
 
         SpawnPlatform();
     }
@@ -31,5 +36,10 @@ public class PlatformSpawner : MonoBehaviour
         chunk.transform.Translate( Vector3.right * 32 );
         chunk.GetComponent<PlatformChunkDriver>().SetMoveAmount( 64 );
     }
+
+	public void ResetSpeed()
+	{
+		CurrentSpeed = m_startingSpeed;
+	}
 
 }
