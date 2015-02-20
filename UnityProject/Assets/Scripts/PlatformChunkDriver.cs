@@ -21,8 +21,8 @@ public class PlatformChunkDriver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_body.MovePosition( this.transform.position + Vector3.left * PlatformSpawner.CurrentSpeed );
-        m_amountToMove += ( Vector3.left * PlatformSpawner.CurrentSpeed ).x;
+        m_body.MovePosition( this.transform.position + Vector3.left * PlatformSpawner.Instance.CurrentSpeed );
+        m_amountToMove += ( Vector3.left * PlatformSpawner.Instance.CurrentSpeed ).x;
         //if ( m_amountToMove <= 0 )
         if ( this.transform.position.x < -32 )
         {

@@ -41,7 +41,7 @@ namespace Discord
 
         public void OnDestroy()
         {
-            m_shuttingDown = true;
+//            m_shuttingDown = true;
         }
     }
 

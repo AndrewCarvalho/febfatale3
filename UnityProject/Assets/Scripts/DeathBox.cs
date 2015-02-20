@@ -9,7 +9,7 @@ public class DeathBox : MonoBehaviour
         if ( collider.GetComponent<Runner3DComponent>() != null )
         {
             // END THE GAME!!
-            PlatformSpawner.CurrentSpeed = 0;
+            PlatformSpawner.Instance.ResetSpeed();
             Application.LoadLevel( Application.loadedLevel );
         }
     }
